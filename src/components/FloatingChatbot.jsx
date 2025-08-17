@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -13,11 +13,22 @@ const FloatingChatbot = () => {
   ])
   const [inputMessage, setInputMessage] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const messagesEndRef = useRef(null)
+  const chatContainerRef = useRef(null)
+
+  // Auto scroll to bottom when new messages arrive
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [chatMessages, isTyping])
 
   const quickReplies = ['Giá cả', 'Demo sản phẩm', 'Hỗ trợ kỹ thuật', 'Liên hệ']
 
   const handleSendMessage = () => {
-    if (!inputMessage.trim()) return
+    if (!inputMessage.trim() || inputMessage.length > 500) return
     
     const newMessage = {
       type: 'user',
@@ -121,13 +132,13 @@ const FloatingChatbot = () => {
 
   return (
     <div className="fixed inset-4 sm:bottom-6 sm:right-6 sm:inset-auto z-50 sm:w-96 sm:max-w-[calc(100vw-3rem)]">
-      <div className="h-full sm:h-auto shadow-2xl rounded-xl overflow-hidden border-2 border-primary/20 bg-background flex flex-col">
+      <div className="h-full sm:h-auto sm:max-h-[80vh] shadow-2xl rounded-xl overflow-hidden border-2 border-primary/20 bg-background flex flex-col">
         <div className="bg-gradient-to-r from-primary to-secondary text-white p-3 sm:p-4 relative flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center relative">
                 <span className="text-lg sm:text-xl">🤖</span>
-                <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full"></div>
+                <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse"></div>
               </div>
               <div>
                 <h3 className="text-white text-base sm:text-lg font-semibold">ASA AI Assistant</h3>
@@ -136,7 +147,7 @@ const FloatingChatbot = () => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors hover:bg-white/10 rounded-full p-1 sm:p-1"
+              className="text-white/80 hover:text-white transition-colors hover:bg-white/10 rounded-full p-1 flex-shrink-0"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -145,17 +156,21 @@ const FloatingChatbot = () => {
           </div>
         </div>
         
-        <div className="bg-background/95 backdrop-blur-sm flex-1 flex flex-col">
+        <div className="bg-background/95 backdrop-blur-sm flex-1 flex flex-col min-h-0">
           {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
+          <div 
+            ref={chatContainerRef}
+            className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 min-h-0"
+            style={{ scrollBehavior: 'smooth' }}
+          >
             {chatMessages.map((msg, index) => (
-              <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] sm:max-w-xs px-3 sm:px-4 py-2 rounded-2xl ${
+              <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}>
+                <div className={`max-w-[85%] sm:max-w-xs px-3 sm:px-4 py-2 rounded-2xl break-words ${
                   msg.type === 'user' 
                     ? 'bg-gradient-to-r from-primary to-primary/90 text-white shadow-md' 
                     : 'bg-muted text-foreground border border-border'
                 }`}>
-                  <p className="text-xs sm:text-sm">{msg.message}</p>
+                  <p className="text-xs sm:text-sm leading-relaxed">{msg.message}</p>
                   <p className={`text-xs mt-1 ${
                     msg.type === 'user' ? 'text-white/70' : 'text-muted-foreground'
                   }`}>
@@ -166,29 +181,33 @@ const FloatingChatbot = () => {
             ))}
             
             {isTyping && (
-              <div className="flex justify-start">
-                <div className="bg-muted text-foreground max-w-[85%] sm:max-w-xs px-3 sm:px-4 py-2 rounded-2xl">
+              <div className="flex justify-start animate-fadeIn">
+                <div className="bg-muted text-foreground max-w-[85%] sm:max-w-xs px-3 sm:px-4 py-2 rounded-2xl border border-border">
                   <div className="flex space-x-1 items-center">
                     <span className="text-xs sm:text-sm">ASA AI đang trả lời</span>
                     <div className="flex space-x-1 ml-2">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                     </div>
                   </div>
                 </div>
               </div>
             )}
+            
+            {/* Scroll anchor */}
+            <div ref={messagesEndRef} />
           </div>
           
           {/* Quick Replies */}
           <div className="px-3 sm:px-4 py-2 border-t bg-muted/30 flex-shrink-0">
-            <div className="flex flex-wrap gap-1 sm:gap-2">
+            <div className="flex flex-wrap gap-1 sm:gap-2 justify-center sm:justify-start">
               {quickReplies.map((reply) => (
                 <button
                   key={reply}
                   onClick={() => handleQuickReply(reply)}
-                  className="px-2 sm:px-3 py-1 text-xs bg-background text-muted-foreground rounded-full hover:bg-gradient-to-r hover:from-primary hover:to-primary/90 hover:text-white transition-all duration-300 border border-border hover:border-primary shadow-sm hover:shadow-md transform hover:scale-105"
+                  className="px-2 sm:px-3 py-1 text-xs bg-background text-muted-foreground rounded-full hover:bg-gradient-to-r hover:from-primary hover:to-primary/90 hover:text-white transition-all duration-300 border border-border hover:border-primary shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95"
+                  disabled={isTyping}
                 >
                   {reply}
                 </button>
@@ -197,27 +216,50 @@ const FloatingChatbot = () => {
           </div>
           
           {/* Chat Input */}
-          <div className="p-3 sm:p-4 border-t flex-shrink-0">
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Nhập câu hỏi..."
-                className="flex-1 px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-xs sm:text-sm"
-              />
+          <div className="p-3 sm:p-4 border-t flex-shrink-0 bg-background">
+            <div className="flex space-x-2 items-end">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={inputMessage}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 500) {
+                      setInputMessage(e.target.value)
+                    }
+                  }}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      handleSendMessage()
+                    }
+                  }}
+                  placeholder="Nhập câu hỏi của bạn..."
+                  className="w-full px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-xs sm:text-sm bg-background resize-none"
+                  disabled={isTyping}
+                />
+              </div>
               <Button 
                 onClick={handleSendMessage}
                 size="sm"
-                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary px-2 sm:px-3 shadow-md"
-                disabled={isTyping}
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary px-3 py-2 shadow-md min-h-[36px] flex-shrink-0"
+                disabled={isTyping || !inputMessage.trim()}
               >
-                <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
+                {isTyping ? (
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                )}
               </Button>
             </div>
+            
+            {/* Character count for long messages */}
+            {inputMessage.length > 100 && (
+              <div className="text-xs text-muted-foreground mt-1 text-right">
+                {inputMessage.length}/500
+              </div>
+            )}
           </div>
         </div>
       </div>
