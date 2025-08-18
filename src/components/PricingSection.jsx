@@ -42,7 +42,7 @@ const PricingSection = () => {
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Gói cơ bản */}
-          <Card className="relative hover:shadow-xl transition-all duration-300 border-2 hover:border-[#009DA5]/20">
+          <Card className="relative hover:shadow-2xl hover:-translate-y-2 hover:scale-105 transition-all duration-500 ease-out border-2 hover:border-[#009DA5]/30 hover:shadow-[#009DA5]/20">
             <div className="absolute -top-3 right-6">
               <span className="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
                 🔥 HOT
@@ -85,7 +85,7 @@ const PricingSection = () => {
           </Card>
 
           {/* Gói chuyên nghiệp */}
-          <Card className="relative hover:shadow-xl transition-all duration-300 border-2 border-[#0D6CE8] hover:border-[#0D6CE8]/60 bg-gradient-to-br from-blue-50/50 to-purple-50/50">
+          <Card className="relative hover:shadow-2xl hover:-translate-y-2 hover:scale-105 transition-all duration-500 ease-out border-2 border-[#0D6CE8] hover:border-[#0D6CE8]/80 bg-gradient-to-br from-blue-50/50 to-purple-50/50 hover:shadow-[#0D6CE8]/20">
             <div className="absolute -top-3 right-6">
               <span className="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
                 🔥 HOT
