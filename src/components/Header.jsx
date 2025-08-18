@@ -16,7 +16,7 @@ const Header = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <img 
-                src="/src/assets/asianUnicorn.png" 
+                src="/asianUnicorn.png" 
                 alt="Asian Unicorn" 
                 className="h-8 w-8 sm:h-10 sm:w-10"
               />

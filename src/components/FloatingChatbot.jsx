@@ -182,13 +182,13 @@ const FloatingChatbot = () => {
             
             {isTyping && (
               <div className="flex justify-start animate-fadeIn">
-                <div className="bg-muted text-foreground max-w-[85%] sm:max-w-xs px-3 sm:px-4 py-2 rounded-2xl border border-border">
-                  <div className="flex space-x-1 items-center">
-                    <span className="text-xs sm:text-sm">ASA AI đang trả lời</span>
-                    <div className="flex space-x-1 ml-2">
-                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                <div className="bg-muted text-foreground max-w-[85%] sm:max-w-xs px-3 sm:px-4 py-3 rounded-2xl border border-border">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 space-y-1 sm:space-y-0">
+                    <span className="text-xs sm:text-sm text-muted-foreground">ASA AI đang trả lời</span>
+                    <div className="flex space-x-1 justify-center sm:justify-start">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                     </div>
                   </div>
                 </div>
@@ -201,12 +201,12 @@ const FloatingChatbot = () => {
           
           {/* Quick Replies */}
           <div className="px-3 sm:px-4 py-2 border-t bg-muted/30 flex-shrink-0">
-            <div className="flex flex-wrap gap-1 sm:gap-2 justify-center sm:justify-start">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1 sm:gap-2 justify-center sm:justify-start">
               {quickReplies.map((reply) => (
                 <button
                   key={reply}
                   onClick={() => handleQuickReply(reply)}
-                  className="px-2 sm:px-3 py-1 text-xs bg-background text-muted-foreground rounded-full hover:bg-gradient-to-r hover:from-primary hover:to-primary/90 hover:text-white transition-all duration-300 border border-border hover:border-primary shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95"
+                  className="px-2 sm:px-3 py-1.5 sm:py-1 text-xs sm:text-sm bg-background text-muted-foreground rounded-full hover:bg-gradient-to-r hover:from-primary hover:to-primary/90 hover:text-white transition-all duration-300 border border-border hover:border-primary shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   disabled={isTyping}
                 >
                   {reply}
@@ -218,7 +218,7 @@ const FloatingChatbot = () => {
           {/* Chat Input */}
           <div className="p-3 sm:p-4 border-t flex-shrink-0 bg-background">
             <div className="flex space-x-2 items-end">
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <input
                   type="text"
                   value={inputMessage}
@@ -234,20 +234,20 @@ const FloatingChatbot = () => {
                     }
                   }}
                   placeholder="Nhập câu hỏi của bạn..."
-                  className="w-full px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-xs sm:text-sm bg-background resize-none"
+                  className="w-full px-3 py-2.5 sm:py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm bg-background resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isTyping}
                 />
               </div>
               <Button 
                 onClick={handleSendMessage}
                 size="sm"
-                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary px-3 py-2 shadow-md min-h-[36px] flex-shrink-0"
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary px-3 py-2.5 sm:py-2 shadow-md min-h-[40px] sm:min-h-[36px] flex-shrink-0 disabled:opacity-50"
                 disabled={isTyping || !inputMessage.trim()}
               >
                 {isTyping ? (
-                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
-                  <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 )}
@@ -256,7 +256,7 @@ const FloatingChatbot = () => {
             
             {/* Character count for long messages */}
             {inputMessage.length > 100 && (
-              <div className="text-xs text-muted-foreground mt-1 text-right">
+              <div className="text-xs text-muted-foreground mt-1.5 text-right">
                 {inputMessage.length}/500
               </div>
             )}
