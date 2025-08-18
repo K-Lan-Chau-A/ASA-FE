@@ -63,7 +63,7 @@ const PricingSection = () => {
             </CardHeader>
 
             <CardContent className="space-y-6">
-              <Button size="lg" className="w-full bg-[#009DA5] hover:bg-[#007a82]">
+              <Button size="lg" className="w-full bg-[#009DA5] hover:bg-[#007a82] text-white">
                 Dùng thử miễn phí
               </Button>
               
@@ -106,7 +106,7 @@ const PricingSection = () => {
             </CardHeader>
 
             <CardContent className="space-y-6">
-              <Button size="lg" className="w-full bg-[#0D6CE8] hover:bg-blue-700">
+              <Button size="lg" className="w-full bg-[#0D6CE8] hover:bg-blue-700 text-white">
                 Mua gói
               </Button>
               
