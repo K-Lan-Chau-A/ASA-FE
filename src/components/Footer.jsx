@@ -12,7 +12,7 @@ const Footer = () => {
                 className="h-10 w-10 mr-3"
               />
               <div>
-                <h3 className="text-xl font-bold">ASA</h3>
+                <h3 className="text-xl font-bold">ASA - AI STORE ASSISTANT</h3>
                 <p className="text-gray-400 text-sm">Công nghệ vượt trội, tích hợp mọi phần cứng</p>
               </div>
             </div>
@@ -40,14 +40,11 @@ const Footer = () => {
 
           {/* Sản phẩm */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Sản phẩm</h4>
+            <h4 className="text-lg font-semibold mb-4">Sản phẩm của chúng tôi</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Quán cafe - trà sữa</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Shop thời trang</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Cửa hàng - tạp hóa</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Quán bida</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Dịch vụ thuê sân</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Nhà hàng, quán ăn</a></li>
+              <li><a href="/products?tab=web" className="text-gray-400 hover:text-white transition-colors">Dành cho website</a></li>
+              <li><a href="/products?tab=desktop" className="text-gray-400 hover:text-white transition-colors">Dành cho ứng dụng máy tính</a></li>
+              <li><a href="/products?tab=mobile" className="text-gray-400 hover:text-white transition-colors">Dành cho ứng dụng di động</a></li>
             </ul>
           </div>
 

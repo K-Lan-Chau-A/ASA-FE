@@ -27,17 +27,10 @@ const PricingSection = () => {
   ]
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-gradient-to-br from-[#009DA5]/5 to-[#0D6CE8]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            Bảng phí dịch vụ phần mềm của chúng tôi
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            Tùy chọn phù hợp với mọi mô hình quản lý kinh doanh, từ cửa hàng nhỏ đến các chuỗi lớn.
-          </p>
-        </div>
+        {/* Spacing */}
+        <div className="mb-8"></div>
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">

@@ -22,7 +22,7 @@ const Header = () => {
               />
             </div>
             <div className="ml-2 sm:ml-3">
-              <h1 className="text-lg sm:text-xl font-bold text-gray-900">ASA</h1>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900">ASA - AI STORE ASSISTANT</h1>
               <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Công nghệ vượt trội, tích hợp mọi phần cứng</p>
             </div>
           </div>

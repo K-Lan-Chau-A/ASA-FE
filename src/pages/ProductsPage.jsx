@@ -1,9 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
 const ProductsPage = () => {
   const [activeTab, setActiveTab] = useState('web')
+
+  // Read URL parameters on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const tabParam = urlParams.get('tab')
+    
+    // Validate tab parameter and set if valid
+    if (tabParam && ['web', 'desktop', 'mobile'].includes(tabParam)) {
+      setActiveTab(tabParam)
+    }
+
+    // Handle browser back/forward buttons
+    const handlePopState = (event) => {
+      const urlParams = new URLSearchParams(window.location.search)
+      const tabParam = urlParams.get('tab')
+      
+      if (tabParam && ['web', 'desktop', 'mobile'].includes(tabParam)) {
+        setActiveTab(tabParam)
+      } else {
+        setActiveTab('web')
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [])
+
+  // Function to handle tab change and update URL
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    
+    // Update URL without page reload
+    const newUrl = `${window.location.pathname}?tab=${tab}`
+    window.history.pushState({ tab }, '', newUrl)
+  }
 
   const products = {
     web: {
@@ -51,14 +90,14 @@ const ProductsPage = () => {
   }
 
   return (
-    <div className="pt-16 min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-[#009DA5]/5 to-[#0D6CE8]/5">
       {/* Header */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section className="pt-16 py-20 bg-gradient-to-br from-[#009DA5] to-[#0D6CE8] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl font-bold text-foreground mb-6">
+          <h1 className="text-5xl font-bold text-white mb-6">
             Sản phẩm của chúng tôi
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Hệ sinh thái hoàn chỉnh cho mọi nhu cầu quản lý bán hàng: từ Web, Desktop đến Mobile App
           </p>
         </div>
@@ -83,7 +122,7 @@ const ProductsPage = () => {
                 {Object.entries(products).map(([key, product], index) => (
                   <button
                     key={key}
-                    onClick={() => setActiveTab(key)}
+                    onClick={() => handleTabChange(key)}
                     className={`relative px-3 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center group flex-1 ${
                       activeTab === key
                         ? 'text-white z-10'
@@ -265,7 +304,7 @@ const ProductsPage = () => {
       </section>
 
       {/* Comparison Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-muted/30">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">

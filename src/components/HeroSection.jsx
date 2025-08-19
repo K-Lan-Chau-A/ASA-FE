@@ -9,13 +9,13 @@ const HeroSection = () => {
           <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
             <div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6">
-                Phần mềm quản lý bán hàng hiện đại cho cửa hàng bán lẻ
+                Phần mềm quản lý bán hàng hiện đại tích hợp AI
               </h1>
               <p className="text-lg sm:text-xl text-blue-100 mb-6 sm:mb-8 leading-relaxed">
                 Chúng tôi là một đội ngũ kinh nghiệm trẻ, đầy nhiệt huyết, mang hoài bão cống hiến sự hoạt động kinh doanh nhỏ lẻ cho các chủ kinh doanh.
               </p>
               <p className="text-base sm:text-lg text-blue-100 mb-6 sm:mb-8">
-                Chúng tôi tin rằng công nghệ sẽ có giá để giải quyết được các vấn đề luôc lẻ của khách hàng.
+                Chúng tôi tin rằng công nghệ sẽ có giá trị để giải quyết được các vấn đề của khách hàng.
               </p>
             </div>
             

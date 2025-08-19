@@ -86,14 +86,14 @@ const SupportPage = () => {
 
 
   return (
-    <div className="pt-16 min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-[#009DA5]/5 to-[#0D6CE8]/5">
       {/* Header */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-purple-50">
+      <section className="pt-16 py-20 bg-gradient-to-br from-[#009DA5] to-[#0D6CE8] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl font-bold text-foreground mb-6">
+          <h1 className="text-5xl font-bold text-white mb-6">
             Trung tâm hỗ trợ
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7 với đội ngũ chuyên viên tận tình và AI Assistant thông minh
           </p>
         </div>

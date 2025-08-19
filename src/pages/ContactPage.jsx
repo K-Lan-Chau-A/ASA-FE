@@ -65,14 +65,14 @@ const ContactPage = () => {
   ]
 
   return (
-    <div className="pt-16 min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-[#009DA5]/5 to-[#0D6CE8]/5">
       {/* Header */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-green-50">
+      <section className="pt-16 py-20 bg-gradient-to-br from-[#009DA5] to-[#0D6CE8] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl font-bold text-foreground mb-6">
+          <h1 className="text-5xl font-bold text-white mb-6">
             Liên hệ với chúng tôi
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn. Hãy liên hệ để được tư vấn miễn phí!
           </p>
         </div>
@@ -239,7 +239,7 @@ const ContactPage = () => {
       </div>
 
       {/* Map Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Văn phòng của chúng tôi</h2>
