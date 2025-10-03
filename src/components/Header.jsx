@@ -16,14 +16,14 @@ const Header = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <img 
-                src="/asianUnicorn.png" 
+                src="/logoASA.png" 
                 alt="Asian Unicorn" 
                 className="h-8 w-8 sm:h-10 sm:w-10"
               />
             </div>
             <div className="ml-2 sm:ml-3">
               <h1 className="text-lg sm:text-xl font-bold text-gray-900">ASA - AI STORE ASSISTANT</h1>
-              <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Công nghệ vượt trội, tích hợp mọi phần cứng</p>
+              <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Tinh giản quá trình, vươn mình tiến xa</p>
             </div>
           </div>
 
