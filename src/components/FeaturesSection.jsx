@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { BackgroundGradient } from '@/components/ui/background-gradient'
+import { AuroraBackground } from '@/components/ui/aurora-background'
 import { useState, useEffect } from 'react'
 
 const FeaturesSection = () => {
@@ -80,67 +82,68 @@ const FeaturesSection = () => {
   }
   return (
     <div className="bg-gray-50">
-      {/* Main Features Introduction */}
-      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-[#009DA5]/5 via-white to-[#0D6CE8]/5">
-        {/* Decorative background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-10 -left-10 w-72 h-72 bg-[#009DA5]/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#0D6CE8]/10 rounded-full blur-3xl"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#009DA5] font-semibold text-2xl mb-4">
-            Quản lý kho theo phương pháp truyền thống gây ra tình trạng thiếu hoặc thừa hàng? Thiếu chính xác?
-          </p>
-          <h2 className="text-4xl font-bold text-gray-900 mb-16">
-            ASA cung cấp giải pháp POS giúp bạn<br />
-            quản lý nhanh gọn, chính xác và hiệu quả
-          </h2>
+       {/* Main Features Introduction */}
+       <AuroraBackground className="py-20 text-slate-900">
+         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+           <p className="text-[#009DA5] font-semibold text-2xl mb-4 drop-shadow-md">
+             Quản lý kho theo phương pháp truyền thống gây ra tình trạng thiếu hoặc thừa hàng? Thiếu chính xác?
+           </p>
+           <h2 className="text-4xl font-bold text-slate-900 mb-16 drop-shadow-lg">
+             ASA cung cấp giải pháp POS giúp bạn<br />
+             quản lý nhanh gọn, chính xác và hiệu quả
+           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 - Enhanced with hover effects */}
-            <div className="text-center group hover:transform hover:scale-105 transition-all duration-300 p-6 rounded-lg hover:bg-white hover:shadow-lg">
-              <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-200 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                <svg className="w-10 h-10 text-[#0D6CE8] group-hover:text-blue-600 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0D6CE8] transition-colors duration-300">Dễ tiếp cận & Dễ sử dụng</h3>
-              <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                Giao diện đơn giản, trực quan<br />
-                Chỉ mất 15 phút là làm quen được ngay.
-              </p>
-            </div>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+             {/* Feature 1 - Enhanced with hover effects */}
+             <BackgroundGradient className="rounded-3xl">
+               <div className="text-center group p-6 rounded-3xl bg-white">
+                 <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                   <svg className="w-10 h-10 text-[#0D6CE8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                   </svg>
+                 </div>
+                 <h3 className="text-xl font-bold text-gray-900 mb-4">Dễ tiếp cận & Dễ sử dụng</h3>
+                 <p className="text-gray-600">
+                   Giao diện đơn giản, trực quan<br />
+                   Chỉ mất 15 phút là làm quen được ngay.
+                 </p>
+               </div>
+             </BackgroundGradient>
 
-            {/* Feature 2 - Enhanced with hover effects */}
-            <div className="text-center group hover:transform hover:scale-105 transition-all duration-300 p-6 rounded-lg hover:bg-white hover:shadow-lg">
-              <div className="bg-orange-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-orange-200 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                <svg className="w-10 h-10 text-orange-500 group-hover:text-orange-600 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-orange-500 transition-colors duration-300">Tiết kiệm chi phí</h3>
-              <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                Miễn phí cài đặt, phí tối ưu phù hợp túi tiền<br />
-                Đội ngũ chăm sóc khách hàng tận tình 24/7.
-              </p>
-            </div>
+             {/* Feature 2 - Enhanced with hover effects */}
+             <BackgroundGradient className="rounded-3xl">
+               <div className="text-center group p-6 rounded-3xl bg-white">
+                 <div className="bg-orange-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                   <svg className="w-10 h-10 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                   </svg>
+                 </div>
+                 <h3 className="text-xl font-bold text-gray-900 mb-4">Tiết kiệm chi phí</h3>
+                 <p className="text-gray-600">
+                   Miễn phí cài đặt, phí tối ưu phù hợp túi tiền<br />
+                   Đội ngũ chăm sóc khách hàng tận tình 24/7.
+                 </p>
+               </div>
+             </BackgroundGradient>
 
-            {/* Feature 3 - Enhanced with hover effects */}
-            <div className="text-center group hover:transform hover:scale-105 transition-all duration-300 p-6 rounded-lg hover:bg-white hover:shadow-lg">
-              <div className="bg-cyan-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-cyan-200 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                <svg className="w-10 h-10 text-[#009DA5] group-hover:text-cyan-600 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#009DA5] transition-colors duration-300">Thông minh & Tự động</h3>
-              <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                Tự động gợi ý bán hàng và nhập kho<br />
-                Đưa ra các chiến lược kinh doanh phù hợp.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+             {/* Feature 3 - Enhanced with hover effects */}
+             <BackgroundGradient className="rounded-3xl">
+               <div className="text-center group p-6 rounded-3xl bg-white">
+                 <div className="bg-cyan-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                   <svg className="w-10 h-10 text-[#009DA5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                   </svg>
+                 </div>
+                 <h3 className="text-xl font-bold text-gray-900 mb-4">Thông minh & Tự động</h3>
+                 <p className="text-gray-600">
+                   Tự động gợi ý bán hàng và nhập kho<br />
+                   Đưa ra các chiến lược kinh doanh phù hợp.
+                 </p>
+               </div>
+             </BackgroundGradient>
+           </div>
+         </div>
+       </AuroraBackground>
 
       {/* Thời đại công nghệ đổi mới */}
       <section className="py-20 bg-white relative overflow-hidden">
