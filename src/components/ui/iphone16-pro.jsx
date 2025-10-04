@@ -17,6 +17,7 @@ const Iphone16Pro = forwardRef(
       contentClassName,
       contentStyle,
       showCamera = true,
+      isMobile = false,
       ...props
     },
     ref
@@ -38,19 +39,19 @@ const Iphone16Pro = forwardRef(
             y="1"
             width={width - 2}
             height={height - 2}
-            rx={rounded ? 75 : 0}
+            rx={rounded ? 56 : 0}
             fill="black"
             stroke="black"
             strokeWidth="0"
           />
 
-          {/* Inner bezel */}
+          {/* Inner bezel - thinner on mobile */}
           <rect
-            x="20"
-            y="20"
-            width={width - 40}
-            height={height - 40}
-            rx={rounded ? 56 : 0}
+            x={isMobile ? "8" : "20"}
+            y={isMobile ? "8" : "20"}
+            width={isMobile ? width - 16 : width - 40}
+            height={isMobile ? height - 16 : height - 40}
+            rx={rounded ? (isMobile ? 56 : 56) : 0}
             fill="black"
             stroke="black"
             strokeWidth="0"
@@ -59,10 +60,10 @@ const Iphone16Pro = forwardRef(
         {/* Screen area */}
         <clipPath id="screen">
           <rect
-            x="20"
-            y="20"
-            width={width - 40}
-            height={height - 40}
+            x={isMobile ? "8" : "20"}
+            y={isMobile ? "8" : "20"}
+            width={isMobile ? width - 16 : width - 40}
+            height={isMobile ? height - 16 : height - 40}
             rx={screenRadius}
             ry={screenRadius}
           />
@@ -70,10 +71,10 @@ const Iphone16Pro = forwardRef(
 
         {/* Screen background */}
         <rect
-          x="20"
-          y="20"
-          width={width - 40}
-          height={height - 40}
+          x={isMobile ? "8" : "20"}
+          y={isMobile ? "8" : "20"}
+          width={isMobile ? width - 16 : width - 40}
+          height={isMobile ? height - 16 : height - 40}
           rx={screenRadius}
           ry={screenRadius}
           fill="white"
@@ -83,10 +84,10 @@ const Iphone16Pro = forwardRef(
         {src && (
           <image
             href={src}
-            x="20"
-            y="20"
-            width={width - 40}
-            height={height - 40}
+            x={isMobile ? "8" : "20"}
+            y={isMobile ? "8" : "20"}
+            width={isMobile ? width - 16 : width - 40}
+            height={isMobile ? height - 16 : height - 40}
             preserveAspectRatio="xMidYMid slice"
             clipPath="url(#screen)"
             className={contentClassName}
@@ -96,10 +97,10 @@ const Iphone16Pro = forwardRef(
 
         {videoSrc && (
           <foreignObject
-            x="20"
-            y="20"
-            width={width - 40}
-            height={height - 40}
+            x={isMobile ? "8" : "20"}
+            y={isMobile ? "8" : "20"}
+            width={isMobile ? width - 16 : width - 40}
+            height={isMobile ? height - 16 : height - 40}
             clipPath="url(#screen)"
           >
             <video
@@ -118,7 +119,7 @@ const Iphone16Pro = forwardRef(
         {showIsland && (
           <rect
             x={width / 2 - islandWidth / 2}
-            y="28"
+            y={isMobile ? "16" : "28"}
             width={islandWidth}
             height={islandHeight}
             rx={20}
@@ -130,7 +131,7 @@ const Iphone16Pro = forwardRef(
         {showCamera && (
           <circle
             cx={width / 2 + islandWidth / 4}
-            cy="48"
+            cy={isMobile ? "36" : "48"}
             r="6"
             fill="black"
           />
@@ -211,6 +212,7 @@ export const IphoneScroll = ({
             showIsland={true}
             shadow={true}
             rounded={true}
+            isMobile={isMobile}
           />
 
           {/* Animated Screen Content */}
@@ -221,7 +223,7 @@ export const IphoneScroll = ({
               transformStyle: "preserve-3d",
               zIndex: 9999,
             }}
-            className={`absolute top-[20px] left-[20px] ${isMobile ? 'w-[240px] h-[560px]' : 'w-[393px] h-[842px]'} rounded-[55px] overflow-hidden`}
+            className={`absolute ${isMobile ? 'top-[8px] left-[8px] w-[264px] h-[584px]' : 'top-[20px] left-[20px] w-[393px] h-[842px]'} rounded-[55px] overflow-hidden`}
           >
             {src && (
               <img
