@@ -4,6 +4,7 @@ import { AuroraBackground } from '@/components/ui/aurora-background'
 import { TypewriterEffect } from '@/components/ui/typewriter-effect'
 import { CardContainer, CardBody, CardItem } from '@/components/ui/3d-card'
 import ElectricBorder from '@/components/ui/ElectricBorder'
+import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
 
 const AIFeaturesSection = () => {
   return (
@@ -248,9 +249,10 @@ const AIFeaturesSection = () => {
             <div>
               <h3 className="text-4xl font-bold text-slate-900 mb-6">
                 AI Không Chỉ Là Tương Lai<br />
-                <span className="bg-gradient-to-r from-[#009DA5] to-[#0D6CE8] bg-clip-text text-transparent">
-                  Mà Là Hiện Tại
-                </span>
+                <br />
+                <Highlight className="bg-gradient-to-r from-[#009DA5] to-[#0D6CE8]">
+                  Mà Còn Là Hiện Tại
+                </Highlight>
               </h3>
               
               <p className="text-lg text-slate-600 leading-relaxed mb-8">
