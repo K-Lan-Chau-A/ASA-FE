@@ -108,15 +108,15 @@ const ProductsPage = () => {
       </AuroraBackground>
 
       {/* MacBook Scroll Section */}
-      <AuroraBackground2 className="relative -mt-60">
+      <AuroraBackground2 className="relative -mt-60 sm:-mt-40 md:-mt-60">
         <MacbookScroll
           src="/logoASA.png"
         />
       </AuroraBackground2>
 
       {/* iPhone Scroll Section - đưa lên sát MacBook */}
-      <AuroraBackground2 className="relative -mt-60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <AuroraBackground2 className="relative -mt-60 sm:-mt-40 md:-mt-60 overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <IphoneScroll
             src="/mobileApp.png" 
           />
@@ -124,7 +124,7 @@ const ProductsPage = () => {
       </AuroraBackground2>
 
       {/* Khoảng trắng để xem ảnh di chuyển ra ngoài */}
-      <div className="h-96"></div>
+      <div className="h-10"></div>
     </div>
   )
 }

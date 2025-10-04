@@ -32,36 +32,37 @@ const Iphone16Pro = forwardRef(
         className={shadow ? "drop-shadow-2xl" : ""}
         {...props}
       >
-        {/* Outer frame */}
-        <rect
-          x="2"
-          y="2"
-          width={width - 4}
-          height={height - 4}
-          rx={rounded ? 75 : 0}
-          fill="black"
-          stroke="black"
-          strokeWidth="2"
-        />
+          {/* Outer frame */}
+          <rect
+            x="1"
+            y="1"
+            width={width - 2}
+            height={height - 2}
+            rx={rounded ? 75 : 0}
+            fill="black"
+            stroke="black"
+            strokeWidth="0"
+          />
 
-        {/* Inner bezel */}
-        <rect
-          x="20"
-          y="20"
-          width={width - 40}
-          height={height - 40}
-          rx={rounded ? 56 : 0}
-          fill="black"
-          stroke="black"
-        />
+          {/* Inner bezel */}
+          <rect
+            x="20"
+            y="20"
+            width={width - 40}
+            height={height - 40}
+            rx={rounded ? 56 : 0}
+            fill="black"
+            stroke="black"
+            strokeWidth="0"
+          />
 
         {/* Screen area */}
         <clipPath id="screen">
           <rect
-            x="21"
-            y="21"
-            width={width - 42}
-            height={height - 42}
+            x="20"
+            y="20"
+            width={width - 40}
+            height={height - 40}
             rx={screenRadius}
             ry={screenRadius}
           />
@@ -69,10 +70,10 @@ const Iphone16Pro = forwardRef(
 
         {/* Screen background */}
         <rect
-          x="21"
-          y="21"
-          width={width - 42}
-          height={height - 42}
+          x="20"
+          y="20"
+          width={width - 40}
+          height={height - 40}
           rx={screenRadius}
           ry={screenRadius}
           fill="white"
@@ -82,10 +83,10 @@ const Iphone16Pro = forwardRef(
         {src && (
           <image
             href={src}
-            x="21"
-            y="21"
-            width={width - 42}
-            height={height - 42}
+            x="20"
+            y="20"
+            width={width - 40}
+            height={height - 40}
             preserveAspectRatio="xMidYMid slice"
             clipPath="url(#screen)"
             className={contentClassName}
@@ -95,10 +96,10 @@ const Iphone16Pro = forwardRef(
 
         {videoSrc && (
           <foreignObject
-            x="21"
-            y="21"
-            width={width - 42}
-            height={height - 42}
+            x="20"
+            y="20"
+            width={width - 40}
+            height={height - 40}
             clipPath="url(#screen)"
           >
             <video
@@ -165,30 +166,30 @@ export const IphoneScroll = ({
   const scale = useTransform(
     scrollYProgress,
     [0, 0.3],
-    [0.6, isMobile ? 0.8 : 1.0]
+    [0.15, isMobile ? 0.3 : 0.5]
   );
   const translateY = useTransform(scrollYProgress, [0, 1], [0, 0]); // iPhone không di chuyển
   const rotate = useTransform(scrollYProgress, [0.1, 0.12, 0.3], [0, 0, 0]); // iPhone không xoay
   const textTransform = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
-  // Animation cho màn hình - theo kịp cuộn
+  // Animation cho màn hình - ảnh tĩnh
   const screenScale = useTransform(
     scrollYProgress,
-    [0, 0.15],
-    [1, isMobile ? 1.1 : 1.2] // Phóng to sớm hơn
+    [0, 1],
+    [1, 1] // Ảnh không thay đổi kích thước
   );
   const screenTranslateY = useTransform(
     scrollYProgress,
-    [0, 0.6],
-    [0, 1200] // Di chuyển nhanh hơn, theo kịp cuộn
+    [0, 1],
+    [0, 0] // Bỏ animation - ảnh không di chuyển ra khỏi iPhone
   );
 
   return (
-    <div
-      ref={ref}
-      className="flex min-h-[120vh] shrink-0 scale-30 transform flex-col items-center justify-start py-0 [perspective:1000px] md:scale-40 lg:scale-50 md:py-10"
-    >
+      <div
+        ref={ref}
+        className="flex min-h-[80vh] shrink-0 scale-2 transform flex-col items-center justify-center py-0 [perspective:1000px] sm:scale-3 md:scale-12 lg:scale-15 xl:scale-18 md:py-3 overflow-x-hidden w-full bg-transparent"
+      >
       <motion.h2
         style={{
           translateY: textTransform,
@@ -200,12 +201,12 @@ export const IphoneScroll = ({
       </motion.h2>
 
       {/* iPhone Container */}
-      <div className="relative [perspective:1000px]">
+      <div className="relative [perspective:1000px] overflow-x-hidden w-full flex justify-center bg-transparent">
         {/* iPhone Frame - đứng im */}
-        <div className="relative">
+        <div className="relative bg-transparent">
           <Iphone16Pro
-            width={433}
-            height={882}
+            width={isMobile ? 280 : 433}
+            height={isMobile ? 600 : 882}
             src=""
             showIsland={true}
             shadow={true}
@@ -220,7 +221,7 @@ export const IphoneScroll = ({
               transformStyle: "preserve-3d",
               zIndex: 9999,
             }}
-            className="absolute top-[21px] left-[21px] w-[391px] h-[840px] rounded-[55px] overflow-hidden"
+            className={`absolute top-[20px] left-[20px] ${isMobile ? 'w-[240px] h-[560px]' : 'w-[393px] h-[842px]'} rounded-[55px] overflow-hidden`}
           >
             {src && (
               <img
