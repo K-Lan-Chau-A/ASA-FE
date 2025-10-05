@@ -1,12 +1,30 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AuroraBackground } from '@/components/ui/aurora-background'
-import { TypewriterEffect } from '@/components/ui/typewriter-effect'
+import { TypewriterCustom } from "@/components/ui/typewriter-effect";
 import { CardContainer, CardBody, CardItem } from '@/components/ui/3d-card'
 import ElectricBorder from '@/components/ui/ElectricBorder'
 import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
 
 const AIFeaturesSection = () => {
+  const words = [
+    {
+      text: "Trí Tuệ",
+      className: "text-slate-900"
+    },
+    {
+      text: "Nhân Tạo",
+      className: "text-slate-900"
+    },
+    {
+      text: "Quản Lý",
+      className: "text-slate-900"
+    },
+    {
+      text: "Kinh Doanh",
+      className: "text-slate-900"
+    }
+  ]
   return (
     <AuroraBackground className="py-20 text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,16 +37,13 @@ const AIFeaturesSection = () => {
             Powered by AI
           </div>
           
-          <TypewriterEffect
-            words={[
-              {
-                text: "Trí Tuệ Nhân Tạo Quản Lý Kinh Doanh",
-                className: "text-slate-900"
-              }
-            ]}
-            className="text-5xl font-bold mb-6"
-            cursorClassName="bg-[#009DA5]"
-          />
+          <div className="flex justify-center">
+              <TypewriterCustom
+                words={words}
+                className="text-4xl font-bold mb-16"
+                cursorClassName="bg-[#009DA5]"
+              />
+            </div>
           
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Hệ thống AI tiên tiến giúp phân tích dữ liệu bán hàng, đưa ra chiến lược kinh doanh thông minh 
