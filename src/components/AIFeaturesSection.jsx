@@ -5,6 +5,7 @@ import { TypewriterCustom } from "@/components/ui/typewriter-effect";
 import { CardContainer, CardBody, CardItem } from '@/components/ui/3d-card'
 import ElectricBorder from '@/components/ui/ElectricBorder'
 import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
+import { useEffect, useRef, useState } from 'react'
 
 const AIFeaturesSection = () => {
   const words = [
@@ -25,6 +26,28 @@ const AIFeaturesSection = () => {
       className: "text-slate-900"
     }
   ]
+
+  // Trigger highlight only when AI Dashboard card scrolls into view
+  const dashboardRef = useRef(null)
+  const [showHighlight, setShowHighlight] = useState(false)
+
+  useEffect(() => {
+    if (!dashboardRef.current || showHighlight) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShowHighlight(true)
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+    observer.observe(dashboardRef.current)
+    return () => observer.disconnect()
+  }, [showHighlight])
+
   return (
     <AuroraBackground className="py-20 text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,7 +206,7 @@ const AIFeaturesSection = () => {
         {/* AI Dashboard Preview */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
           {/* Left: AI Dashboard Mock */}
-          <div className="relative">
+          <div className="relative" ref={dashboardRef}>
             <ElectricBorder 
               color="#99E1E4" 
               speed={1.5} 
@@ -265,9 +288,13 @@ const AIFeaturesSection = () => {
               <h3 className="text-4xl font-bold text-slate-900 mb-6">
                 AI Không Chỉ Là Tương Lai<br />
                 <br />
-                <Highlight className="bg-gradient-to-r from-[#009DA5] to-[#0D6CE8]">
-                  Mà Còn Là Hiện Tại
-                </Highlight>
+                {showHighlight ? (
+                  <Highlight className="bg-gradient-to-r from-[#009DA5] to-[#0D6CE8]">
+                    Mà Còn Là Hiện Tại
+                  </Highlight>
+                ) : (
+                  <span>Mà Còn Là Hiện Tại</span>
+                )}
               </h3>
               
               <p className="text-lg text-slate-600 leading-relaxed mb-8">
