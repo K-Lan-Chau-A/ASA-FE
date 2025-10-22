@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import SELLER_URL from '../config/seller'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -63,11 +64,11 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="https://asa-web-app-tawny.vercel.app/">
+            <a href={SELLER_URL} target="_blank" rel="noreferrer">
               <Button variant="outline" className="border-[#009DA5] text-[#009DA5] hover:bg-[#009DA5] hover:text-white">
                 Đăng nhập
               </Button>
-            </Link>
+            </a>
             <Link to="/trial">
               <Button className="bg-[#009DA5] hover:bg-[#007a82] text-white">
                 Dùng thử miễn phí
