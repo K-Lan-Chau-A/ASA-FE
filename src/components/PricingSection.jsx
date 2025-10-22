@@ -10,7 +10,7 @@ const PricingSection = () => {
     "Quản lý nhân viên, ca làm việc",
     "Thống kê doanh thu, lời lãi",
     "AI hỗ trợ người dùng",
-    "Dùng thử 14 ngày miễn phí, hủy bất cứ lúc nào"
+    "Dùng thử 7 ngày miễn phí, hủy bất cứ lúc nào"
   ]
 
   const proFeatures = [
