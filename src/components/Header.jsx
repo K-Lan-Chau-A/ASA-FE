@@ -63,12 +63,16 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" className="border-[#009DA5] text-[#009DA5] hover:bg-[#009DA5] hover:text-white">
-              Đăng nhập
-            </Button>
-            <Button className="bg-[#009DA5] hover:bg-[#007a82] text-white">
-              Dùng thử miễn phí
-            </Button>
+            <Link to="https://asa-web-app-tawny.vercel.app/">
+              <Button variant="outline" className="border-[#009DA5] text-[#009DA5] hover:bg-[#009DA5] hover:text-white">
+                Đăng nhập
+              </Button>
+            </Link>
+            <Link to="/trial">
+              <Button className="bg-[#009DA5] hover:bg-[#007a82] text-white">
+                Dùng thử miễn phí
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -131,9 +135,11 @@ const Header = () => {
                 <Button variant="outline" className="w-full border-[#009DA5] text-[#009DA5] hover:bg-[#009DA5] hover:text-white">
                   Đăng nhập
                 </Button>
-                <Button className="w-full bg-[#009DA5] hover:bg-[#007a82] text-white">
-                  Dùng thử miễn phí
-                </Button>
+                <Link to="/trial" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full bg-[#009DA5] hover:bg-[#007a82] text-white">
+                    Dùng thử miễn phí
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

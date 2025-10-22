@@ -7,6 +7,7 @@ import ProductsPage from './pages/ProductsPage'
 import PricingPage from './pages/PricingPage'
 import SupportPage from './pages/SupportPage'
 import ContactPage from './pages/ContactPage'
+import TrialPage from './pages/TrialPage'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/support" element={<SupportPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/trial" element={<TrialPage />} />
           </Routes>
         </main>
         <Footer />

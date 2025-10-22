@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import chatbotLogo from '@/assets/chatbotLogo.jpg'
 
 const FloatingChatbot = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -106,11 +107,15 @@ const FloatingChatbot = () => {
       <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
         <button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-primary to-secondary text-white rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 flex items-center justify-center group relative"
+          className="w-14 h-14 sm:w-16 sm:h-16 bg-transparent text-white rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 flex items-center justify-center group relative"
         >
           <div className="relative">
-            <span className="text-xl sm:text-2xl">🤖</span>
-            <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-400 rounded-full animate-pulse"></div>
+            <img 
+              src={chatbotLogo} 
+              alt="ASA AI Assistant" 
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-grey-300"
+            />
+            <div className="absolute -top-2 -right-2 w-4 h-4 sm:w-5 sm:h-5 bg-green-400 rounded-full animate-pulse"></div>
           </div>
         </button>
         
@@ -136,9 +141,13 @@ const FloatingChatbot = () => {
         <div className="bg-gradient-to-r from-primary to-secondary text-white p-3 sm:p-4 relative flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center relative">
-                <span className="text-lg sm:text-xl">🤖</span>
-                <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse"></div>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-transparent rounded-full flex items-center justify-center relative">
+                <img 
+                  src={chatbotLogo} 
+                  alt="ASA AI Assistant" 
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-black"
+                />
+                <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-400 rounded-full animate-pulse"></div>
               </div>
               <div>
                 <h3 className="text-white text-base sm:text-lg font-semibold">ASA AI Assistant</h3>

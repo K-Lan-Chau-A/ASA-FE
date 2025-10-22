@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button'
 import CountUp from '@/components/ui/CountUp'
 import SplitText from '@/components/ui/SplitText'
-import DarkVeil from '@/components/ui/DarkVeil';
+import DarkVeil from '@/components/ui/DarkVeil'
+import { Link } from 'react-router-dom'
 const HeroSection = () => {
   return (
     <section id="home" className="relative text-white overflow-hidden">
@@ -52,15 +53,17 @@ const HeroSection = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto"
-                >
-                  Dùng thử miễn phí
-                  <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Button>
+                <Link to="/trial">
+                  <Button
+                    size="lg"
+                    className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto"
+                  >
+                    Dùng thử miễn phí
+                    <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </Button>
+                </Link>
 
                 <Button
                   size="lg"
