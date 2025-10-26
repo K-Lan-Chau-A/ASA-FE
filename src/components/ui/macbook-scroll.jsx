@@ -29,7 +29,8 @@ export const MacbookScroll = ({
   src,
   showGradient,
   title,
-  badge
+  badge,
+  scrollY = 0
 }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -52,6 +53,23 @@ export const MacbookScroll = ({
   const textTransform = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
+  // Calculate image fade based on scrollY prop
+  const getImageOpacity = () => {
+    const fadeStart = 600;  // Bắt đầu mờ
+    const fadeEnd = 1000;   // Ẩn hoàn toàn
+    
+    if (scrollY < fadeStart) {
+      return 1;
+    } else if (scrollY < fadeEnd) {
+      const progress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+      return 1 - progress;
+    } else {
+      return 0;
+    }
+  };
+
+  const imageOpacity = getImageOpacity();
+
   return (
     <div
       ref={ref}
@@ -69,7 +87,8 @@ export const MacbookScroll = ({
         scaleX={scaleX}
         scaleY={scaleY}
         rotate={rotate}
-        translate={translate} />
+        translate={translate}
+        imageOpacity={imageOpacity} />
       {/* Base area */}
       <div
         className="relative -z-10 h-[22rem] w-[32rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]">
@@ -106,7 +125,8 @@ export const Lid = ({
   scaleY,
   rotate,
   translate,
-  src
+  src,
+  imageOpacity = 1
 }) => {
   return (
     <div className="relative [perspective:800px]">
@@ -127,22 +147,25 @@ export const Lid = ({
           </span>
         </div>
       </div>
-      <motion.div
-        style={{
-          scaleX: scaleX,
-          scaleY: scaleY,
-          rotateX: rotate,
-          translateY: translate,
-          transformStyle: "preserve-3d",
-          transformOrigin: "top",
-        }}
-        className="absolute inset-0 h-96 w-[32rem] rounded-2xl bg-[#010101] p-2">
-        <div className="absolute inset-0 rounded-lg bg-[#272729]" />
-        <img
-          src={src}
-          alt="aceternity logo"
-          className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top" />
-      </motion.div>
+      {imageOpacity > 0 && (
+        <motion.div
+          style={{
+            scaleX: scaleX,
+            scaleY: scaleY,
+            rotateX: rotate,
+            translateY: translate,
+            transformStyle: "preserve-3d",
+            transformOrigin: "top",
+            opacity: imageOpacity,
+          }}
+          className="absolute inset-0 h-96 w-[32rem] rounded-2xl bg-[#010101] p-2 transition-opacity duration-300">
+          <div className="absolute inset-0 rounded-lg bg-[#272729]" />
+          <img
+            src={src}
+            alt="aceternity logo"
+            className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top" />
+        </motion.div>
+      )}
     </div>
   );
 };

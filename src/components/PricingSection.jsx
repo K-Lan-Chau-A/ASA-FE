@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { AuroraBackground } from '@/components/ui/aurora-background'
 
 const PricingSection = () => {
   const features = [
@@ -27,7 +28,7 @@ const PricingSection = () => {
   ]
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#009DA5]/5 to-[#0D6CE8]/5">
+    <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Spacing */}
         <div className="mb-8"></div>
