@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import chatbotLogo from '@/assets/chatbotLogo.jpg'
+import API_URL from '@/config/api'
 
 const FloatingChatbot = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -28,78 +29,63 @@ const FloatingChatbot = () => {
 
   const quickReplies = ['Giá cả', 'Demo sản phẩm', 'Hỗ trợ kỹ thuật', 'Liên hệ']
 
-  const handleSendMessage = () => {
-    if (!inputMessage.trim() || inputMessage.length > 500) return
-    
-    const newMessage = {
+  const buildConversationHistory = () => {
+    // Convert current chatMessages into a simple text transcript for the API
+    // Only include finished messages (exclude typing states)
+    return chatMessages
+      .map(m => `${m.type === 'user' ? 'User' : 'AI'}: ${m.message}`)
+      .join('\n')
+  }
+
+  const sendMessageToApi = async (question) => {
+    try {
+      const conversationHistory = buildConversationHistory()
+      const res = await fetch(`${API_URL}/api/Chatbot/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, conversationHistory })
+      })
+      if (!res.ok) {
+        const text = await res.text()
+        throw new Error(text || `Chatbot request failed with ${res.status}`)
+      }
+      const data = await res.json()
+      // Try common fields; fallback to stringified data
+      return data?.answer || data?.message || data?.response || JSON.stringify(data)
+    } catch (err) {
+      console.error('Chatbot request error:', err)
+      return 'Xin lỗi, hiện tại tôi không thể trả lời. Vui lòng thử lại sau.'
+    }
+  }
+
+  const sendMessage = async (text) => {
+    if (!text.trim() || text.length > 500) return
+    const userMsg = {
       type: 'user',
-      message: inputMessage,
+      message: text,
       time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
     }
-    
-    setChatMessages(prev => [...prev, newMessage])
-    setInputMessage('')
+    setChatMessages(prev => [...prev, userMsg])
     setIsTyping(true)
-    
-    // Simulate AI response
-    setTimeout(() => {
-      const responses = {
-        'giá': 'Gói cơ bản: 150,000đ/tháng, Gói chuyên nghiệp: 300,000đ/tháng. Bạn muốn tôi giải thích chi tiết hơn không?',
-        'demo': 'Tuyệt vời! Tôi sẽ kết nối bạn với team để đặt lịch demo. Bạn có thể để lại số điện thoại không?',
-        'hỗ trợ': 'Tôi sẵn sàng hỗ trợ! Bạn đang gặp vấn đề gì với hệ thống?',
-        'liên hệ': 'Hotline: 1900-xxxx (24/7) hoặc email: support@asa.vn. Bạn muốn tôi kết nối trực tiếp không?'
-      }
-      
-      let botResponse = 'Cảm ơn bạn đã liên hệ! Tôi đã ghi nhận yêu cầu. Một chuyên viên sẽ liên hệ sớm nhất.'
-      
-      const lowerInput = inputMessage.toLowerCase()
-      for (const [key, response] of Object.entries(responses)) {
-        if (lowerInput.includes(key)) {
-          botResponse = response
-          break
-        }
-      }
-      
-      const newBotMessage = {
-        type: 'bot',
-        message: botResponse,
-        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-      }
-      
-      setIsTyping(false)
-      setChatMessages(prev => [...prev, newBotMessage])
-    }, 1500)
+    const answer = await sendMessageToApi(text)
+    const botMsg = {
+      type: 'bot',
+      message: answer,
+      time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+    }
+    setIsTyping(false)
+    setChatMessages(prev => [...prev, botMsg])
+  }
+
+  const handleSendMessage = () => {
+    if (!inputMessage.trim() || inputMessage.length > 500) return
+    const text = inputMessage
+    setInputMessage('')
+    sendMessage(text)
   }
 
   const handleQuickReply = (reply) => {
-    // Auto-send the quick reply immediately
-    const newMessage = {
-      type: 'user',
-      message: reply,
-      time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-    }
-    
-    setChatMessages(prev => [...prev, newMessage])
-    setIsTyping(true)
-    
-    // Simulate AI response with better context awareness
-    setTimeout(() => {
-      const responses = {
-        'Giá cả': 'Gói cơ bản: 150,000đ/tháng, Gói chuyên nghiệp: 300,000đ/tháng. Bạn muốn tôi giải thích chi tiết hơn không?',
-        'Demo sản phẩm': 'Tuyệt vời! Tôi sẽ kết nối bạn với team để đặt lịch demo. Bạn có thể để lại số điện thoại không?',
-        'Hỗ trợ kỹ thuật': 'Tôi sẵn sàng hỗ trợ! Bạn đang gặp vấn đề gì với hệ thống?',
-        'Liên hệ': 'Hotline: 1900-xxxx (24/7) hoặc email: support@asa.vn. Bạn muốn tôi kết nối trực tiếp không?'
-      }
-      
-      const botResponse = {
-        type: 'bot',
-        message: responses[reply] || 'Cảm ơn bạn đã liên hệ! Tôi đã ghi nhận yêu cầu. Một chuyên viên sẽ liên hệ sớm nhất.',
-        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-      }
-      
-      setIsTyping(false)
-      setChatMessages(prev => [...prev, botResponse])
-    }, 1500)
+    sendMessage(reply)
   }
 
   if (!isOpen) {

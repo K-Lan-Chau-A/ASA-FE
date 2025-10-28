@@ -8,6 +8,7 @@ import PricingPage from './pages/PricingPage'
 import SupportPage from './pages/SupportPage'
 import ContactPage from './pages/ContactPage'
 import TrialPage from './pages/TrialPage'
+import BuyPage from './pages/BuyPage'
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/support" element={<SupportPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/trial" element={<TrialPage />} />
+            <Route path="/buy" element={<BuyPage />} />
           </Routes>
         </main>
         <Footer />

@@ -1,8 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { AuroraBackground } from '@/components/ui/aurora-background'
+import { useNavigate } from 'react-router-dom'
 
 const PricingSection = () => {
+  const navigate = useNavigate()
   const features = [
     "Không giới hạn các tính năng cơ bản",
     "Hỗ trợ khách hàng qua tổng đài hotline", 
@@ -57,7 +59,7 @@ const PricingSection = () => {
             </CardHeader>
 
             <CardContent className="space-y-6">
-              <Button size="lg" className="w-full bg-[#009DA5] hover:bg-[#007a82] text-white">
+              <Button onClick={() => navigate('/trial')} size="lg" className="w-full bg-[#009DA5] hover:bg-[#007a82] text-white">
                 Dùng thử miễn phí
               </Button>
               
@@ -100,7 +102,7 @@ const PricingSection = () => {
             </CardHeader>
 
             <CardContent className="space-y-6">
-              <Button size="lg" className="w-full bg-[#0D6CE8] hover:bg-blue-700 text-white">
+              <Button onClick={() => navigate('/buy')} size="lg" className="w-full bg-[#0D6CE8] hover:bg-blue-700 text-white">
                 Mua gói
               </Button>
               
