@@ -1,10 +1,44 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { AuroraBackground } from '@/components/ui/aurora-background'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import API_URL from '@/config/api'
 
 const PricingSection = () => {
   const navigate = useNavigate()
+  const [pricesById, setPricesById] = useState({})
+
+  const formatVND = (value) => {
+    if (typeof value !== 'number') return '--'
+    return value.toLocaleString('vi-VN') + 'đ'
+  }
+
+  useEffect(() => {
+    let isMounted = true
+    const fetchPrices = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/products?page=1&pageSize=10`)
+        if (!res.ok) throw new Error('Failed to load products')
+        const data = await res.json()
+        const mapped = {}
+        if (data && Array.isArray(data.items)) {
+          for (const p of data.items) {
+            if (p && (p.productId === 1 || p.productId === 2)) {
+              mapped[p.productId] = {
+                price: typeof p.price === 'number' ? p.price : undefined,
+                originalPrice: typeof p.originalPrice === 'number' ? p.originalPrice : undefined,
+              }
+            }
+          }
+        }
+        if (isMounted) setPricesById(mapped)
+      } catch (e) {}
+    }
+    fetchPrices()
+    return () => {
+      isMounted = false
+    }
+  }, [])
   const features = [
     "Không giới hạn các tính năng cơ bản",
     "Hỗ trợ khách hàng qua tổng đài hotline", 
@@ -50,9 +84,11 @@ const PricingSection = () => {
                 Gói cơ bản
               </CardTitle>
               <div className="space-y-2">
-                <div className="text-sm text-muted-foreground line-through">200.000đ</div>
+                <div className="text-sm text-muted-foreground line-through">
+                  {formatVND(pricesById[1]?.originalPrice ?? pricesById[1]?.price ?? 150000)}
+                </div>
                 <div className="text-4xl font-bold text-foreground">
-                  150.000đ
+                  {formatVND(pricesById[1]?.price ?? 150000)}
                   <span className="text-lg font-normal text-muted-foreground"> / tháng</span>
                 </div>
               </div>
@@ -93,9 +129,11 @@ const PricingSection = () => {
                 Gói chuyên nghiệp
               </CardTitle>
               <div className="space-y-2">
-                <div className="text-sm text-muted-foreground line-through">350.000đ</div>
+                <div className="text-sm text-muted-foreground line-through">
+                  {formatVND(pricesById[2]?.originalPrice ?? pricesById[2]?.price ?? 300000)}
+                </div>
                 <div className="text-4xl font-bold text-foreground">
-                  300.000đ
+                  {formatVND(pricesById[2]?.price ?? 300000)}
                   <span className="text-lg font-normal text-muted-foreground"> / tháng</span>
                 </div>
               </div>

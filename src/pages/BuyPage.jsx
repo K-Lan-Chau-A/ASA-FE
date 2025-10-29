@@ -4,6 +4,7 @@ import provinces from '@/constant/donViHanhChinh34TinhThanh.json'
 import vietQrBanks from '@/constant/vietQrBank.json'
 
 const BuyPage = () => {
+  const [premiumPrice, setPremiumPrice] = useState(300000)
   const [formData, setFormData] = useState({
     businessName: '',
     ownerName: '',
@@ -25,6 +26,27 @@ const BuyPage = () => {
   const [qrCodeUrl, setQrCodeUrl] = useState('')
   const [orderId, setOrderId] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  // Fetch product prices (use fallback 300,000 if API is unavailable)
+  useEffect(() => {
+    let isMounted = true
+    const fetchPrices = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/products?page=1&pageSize=10`)
+        if (!res.ok) return
+        const data = await res.json()
+        const premium = (data?.items || []).find(p => p?.productId === 2)
+        if (isMounted && premium) {
+          const price = typeof premium.price === 'number' ? premium.price : 300000
+          setPremiumPrice(price)
+        }
+      } catch {}
+    }
+    fetchPrices()
+    return () => { isMounted = false }
+  }, [])
+
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
@@ -68,7 +90,7 @@ const BuyPage = () => {
     try {
       const payload = {
         productId: 2,
-        totalPrice: 300000,
+        totalPrice: premiumPrice,
         paymentMethod: "2",
         discount: 0,
         createdAt: new Date().toISOString(),
@@ -132,7 +154,8 @@ const BuyPage = () => {
       setIsSubmitting(false)
     } catch (err) {
       console.error('Buy submit failed:', err)
-      alert('Gửi đăng ký mua gói thất bại. Vui lòng thử lại sau.')
+      setErrorMessage('Gửi đăng ký mua gói thất bại. Vui lòng thử lại sau.')
+      setShowErrorModal(true)
       setIsSubmitting(false)
     }
   }
@@ -455,6 +478,27 @@ const BuyPage = () => {
               className="w-full bg-gradient-to-r from-[#009DA5] to-[#00C8D4] hover:from-[#007a82] hover:to-[#00a6b0] text-white font-semibold py-3 rounded-[15px] transition-all"
             >
               Xác nhận
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Error Modal */}
+      {showErrorModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-[20px] p-8 max-w-md w-full shadow-2xl text-center">
+            <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Có lỗi xảy ra</h3>
+            <p className="text-gray-600 mb-6">{errorMessage || 'Đã xảy ra lỗi. Vui lòng thử lại sau.'}</p>
+            <button
+              onClick={() => setShowErrorModal(false)}
+              className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 rounded-[15px] transition-all"
+            >
+              Đóng
             </button>
           </div>
         </div>
