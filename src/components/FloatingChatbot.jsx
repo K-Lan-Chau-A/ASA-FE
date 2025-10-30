@@ -136,7 +136,7 @@ const FloatingChatbot = () => {
                 <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-400 rounded-full animate-pulse"></div>
               </div>
               <div>
-                <h3 className="text-white text-base sm:text-lg font-semibold">ASA AI Assistant</h3>
+                <h3 className="text-white text-base sm:text-lg font-semibold">Pony</h3>
                 <p className="text-white/80 text-xs sm:text-sm">Trực tuyến</p>
               </div>
             </div>
