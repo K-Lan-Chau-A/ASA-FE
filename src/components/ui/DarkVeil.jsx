@@ -159,24 +159,32 @@ export default function DarkVeil({
     }
 
     if (!webglSupported) {
-      // Log detailed error information to help debug
-      console.warn('WebGL is not supported or disabled in this browser.', {
+      // Log 5 distinct warnings for debugging
+      // Warn 1: Main WebGL not supported
+      console.warn('[DarkVeil Warning 1/5] WebGL is not supported or disabled in this browser.', {
         error: webglError,
         userAgent: navigator.userAgent,
         hardwareConcurrency: navigator.hardwareConcurrency,
-        // Check if WebGL is explicitly disabled via Chrome flags
         chromeVersion: navigator.userAgent.match(/Chrome\/(\d+)/)?.[1]
       });
-      console.warn('Possible reasons:');
-      console.warn('1. WebGL disabled in Chrome settings (chrome://settings/system or chrome://flags/#disable-webgl)');
-      console.warn('2. Outdated graphics drivers');
-      console.warn('3. Hardware acceleration disabled');
-      console.warn('4. WebGL blocked by extension or security policy');
-      console.warn('5. Chrome running in software rendering mode');
       
-      // Apply fallback background gradient
+      // Warn 2: Chrome settings check
+      console.warn('[DarkVeil Warning 2/5] Check Chrome settings: WebGL may be disabled at chrome://settings/system or chrome://flags/#disable-webgl');
+      
+      // Warn 3: Graphics drivers
+      console.warn('[DarkVeil Warning 3/5] Check graphics drivers: Outdated drivers may prevent WebGL initialization');
+      
+      // Warn 4: Hardware acceleration
+      console.warn('[DarkVeil Warning 4/5] Check hardware acceleration: Disabled hardware acceleration can block WebGL');
+      
+      // Warn 5: Extensions/security
+      console.warn('[DarkVeil Warning 5/5] Check extensions/security: WebGL may be blocked by browser extensions or security policies');
+      
+      // Apply fallback background using darker primary color (#009DA5 -> darker version)
+      // Primary: #009DA5 (rgb: 0, 157, 165) -> Darker: #006A70, #005A60
       if (parent) {
-        parent.style.background = 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%)';
+        // Darker version of primary color #009DA5 as background
+        parent.style.background = 'linear-gradient(135deg, #005A60 0%, #006A70 50%, #004A50 100%)';
       }
       return;
     }
@@ -188,13 +196,21 @@ export default function DarkVeil({
         canvas
       });
     } catch (e) {
+      // Warn 3: Renderer creation failed
       console.warn('Failed to create WebGL renderer:', e);
+      if (parent) {
+        parent.style.background = 'linear-gradient(135deg, #005A60 0%, #006A70 50%, #004A50 100%)';
+      }
       return;
     }
 
     // Check if renderer has a valid GL context
     if (!renderer || !renderer.gl) {
+      // Warn 4: GL context not available
       console.warn('WebGL context is not available. DarkVeil will not render.');
+      if (parent) {
+        parent.style.background = 'linear-gradient(135deg, #005A60 0%, #006A70 50%, #004A50 100%)';
+      }
       return;
     }
 
@@ -223,7 +239,11 @@ export default function DarkVeil({
       });
       mesh = new Mesh(gl, { geometry, program });
     } catch (e) {
+      // Warn 5: WebGL resources initialization failed
       console.warn('Failed to initialize WebGL resources:', e);
+      if (parent) {
+        parent.style.background = 'linear-gradient(135deg, #005A60 0%, #006A70 50%, #004A50 100%)';
+      }
       return;
     }
 
@@ -235,7 +255,8 @@ export default function DarkVeil({
         renderer.setSize(w * resolutionScale, h * resolutionScale);
         program.uniforms.uResolution.value.set(w, h);
       } catch (e) {
-        console.warn('Error during resize:', e);
+        // Additional warning for resize errors (will be one of the 5)
+        console.warn('Error during resize operation:', e);
       }
     };
 
