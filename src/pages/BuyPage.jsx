@@ -429,9 +429,9 @@ const BuyPage = () => {
           </form>
         </div>
       </div>
+      </div>
 
-      {/* QR Code Modal */
-      }
+      {/* QR Code Modal */}
         {showQrModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="inline-block bg-white rounded-[20px] p-6 shadow-2xl">
