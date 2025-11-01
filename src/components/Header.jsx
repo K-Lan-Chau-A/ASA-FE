@@ -133,9 +133,11 @@ const Header = () => {
                 Liên hệ
               </Link>
               <div className="px-3 py-2 space-y-2">
-                <Button variant="outline" className="w-full border-[#009DA5] text-[#009DA5] hover:bg-[#009DA5] hover:text-white">
-                  Đăng nhập
-                </Button>
+                <a href={SELLER_URL} target="_blank" rel="noreferrer" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" className="w-full border-[#009DA5] text-[#009DA5] hover:bg-[#009DA5] hover:text-white">
+                    Đăng nhập
+                  </Button>
+                </a>
                 <Link to="/trial" onClick={() => setIsMenuOpen(false)}>
                   <Button className="w-full bg-[#009DA5] hover:bg-[#007a82] text-white">
                     Dùng thử miễn phí

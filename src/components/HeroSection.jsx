@@ -3,6 +3,7 @@ import CountUp from '@/components/ui/CountUp'
 import SplitText from '@/components/ui/SplitText'
 import DarkVeil from '@/components/ui/DarkVeil'
 import { Link } from 'react-router-dom'
+import { FaAndroid } from 'react-icons/fa'
 const HeroSection = () => {
   return (
     <section id="home" className="relative text-white overflow-hidden">
@@ -74,6 +75,19 @@ const HeroSection = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </Button>
+
+                <a 
+                  href="/app-release.apk" 
+                  download="ASA-App.apk"
+                >
+                  <Button
+                    size="lg"
+                    className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto"
+                  >
+                    <FaAndroid className="mr-2 h-5 w-5" />
+                    Tải app Android
+                  </Button>
+                </a>
 
               </div>
 
