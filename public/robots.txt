@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://asa.systems/sitemap.xml
+
+# Crawl-delay (optional, for rate limiting)
+Crawl-delay: 1
+

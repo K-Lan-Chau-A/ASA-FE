@@ -1,10 +1,13 @@
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { PinContainer } from '@/components/ui/3d-pin'
+import SEO from '@/components/SEO'
+import { seoConfig } from '@/config/seo'
 
 const ContactPage = () => {
   
   return (
     <AuroraBackground className="min-h-screen">
+      <SEO {...seoConfig.contact} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">

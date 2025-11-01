@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import API_URL from '@/config/api'
 import provinces from '@/constant/donViHanhChinh34TinhThanh.json'
 import vietQrBanks from '@/constant/vietQrBank.json'
+import SEO from '@/components/SEO'
+import { seoConfig } from '@/config/seo'
 
 const TrialPage = () => {
   const [formData, setFormData] = useState({
@@ -113,7 +115,9 @@ const TrialPage = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-100 py-20">
+      <>
+        <SEO {...seoConfig.trial} />
+        <div className="min-h-screen bg-gray-100 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-[20px] shadow-lg p-8 md:p-12 text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -164,11 +168,14 @@ const TrialPage = () => {
           </div>
         </div>
       </div>
+      </>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4">
+    <>
+      <SEO {...seoConfig.trial} />
+      <div className="min-h-screen bg-gray-100 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Logo and Title Section */}
         <div className="text-center mb-8">
@@ -378,7 +385,8 @@ const TrialPage = () => {
           </form>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 

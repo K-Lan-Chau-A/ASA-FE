@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import SEO from '@/components/SEO'
+import { seoConfig } from '@/config/seo'
 
 const SupportPage = () => {
   const [formData, setFormData] = useState({
@@ -48,6 +50,7 @@ const SupportPage = () => {
 
   return (
     <AuroraBackground className="min-h-screen">
+      <SEO {...seoConfig.support} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">

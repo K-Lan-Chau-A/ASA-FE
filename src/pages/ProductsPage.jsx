@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { AuroraBackground } from '@/components/ui/aurora-background'
 import { MacbookScroll } from '@/components/ui/macbook-scroll'
 import { IphoneScroll } from '@/components/ui/iphone16-pro'
+import SEO from '@/components/SEO'
+import { seoConfig } from '@/config/seo'
 
 const ProductsPage = () => {
   const [scrollY, setScrollY] = useState(0)
@@ -17,6 +19,7 @@ const ProductsPage = () => {
 
   return (
     <AuroraBackground className="min-h-screen">
+      <SEO {...seoConfig.products} />
       {/* Header */}
       <div className="pt-16 py-12 text-slate-900 relative z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
