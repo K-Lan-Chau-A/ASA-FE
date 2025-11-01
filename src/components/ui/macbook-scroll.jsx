@@ -55,8 +55,8 @@ export const MacbookScroll = ({
 
   // Calculate image fade based on scrollY prop
   const getImageOpacity = () => {
-    const fadeStart = 600;  // Bắt đầu mờ
-    const fadeEnd = 1000;   // Ẩn hoàn toàn
+    const fadeStart = 800;  // Bắt đầu mờ
+    const fadeEnd = 1300;   // Ẩn hoàn toàn
     
     if (scrollY < fadeStart) {
       return 1;
@@ -158,12 +158,12 @@ export const Lid = ({
             transformOrigin: "top",
             opacity: imageOpacity,
           }}
-          className="absolute inset-0 h-96 w-[32rem] rounded-2xl bg-[#010101] p-2 transition-opacity duration-300">
+          className="absolute inset-0 h-[18rem] w-[32rem] rounded-2xl bg-[#010101] p-2 transition-opacity duration-300">
           <div className="absolute inset-0 rounded-lg bg-[#272729]" />
           <img
             src={src}
             alt="aceternity logo"
-            className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top" />
+            className="absolute inset-0 h-full w-full rounded-lg object-contain" />
         </motion.div>
       )}
     </div>

@@ -32,7 +32,7 @@ const ProductsPage = () => {
       {/* MacBook Scroll Section */}
       <div className="relative -mt-60 sm:-mt-40 md:-mt-60">
         <MacbookScroll
-          src="/logoASA.png"
+          src="/webApp.png"
           scrollY={scrollY}
         />
       </div>
