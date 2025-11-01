@@ -133,15 +133,51 @@ export default function DarkVeil({
     // Check if WebGL is supported before trying to use it
     const testCanvas = document.createElement('canvas');
     let webglSupported = false;
+    let webglError = null;
+    let glContext = null;
+    
     try {
-      const testGl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
-      webglSupported = !!testGl;
+      // Try WebGL first
+      glContext = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+      
+      // If context exists but is null, try to get more info
+      if (!glContext) {
+        // Try WebGL2
+        glContext = testCanvas.getContext('webgl2');
+      }
+      
+      if (glContext) {
+        // Check if context is actually usable
+        const debugInfo = glContext.getExtension('WEBGL_debug_renderer_info');
+        webglSupported = true;
+      } else {
+        webglError = 'WebGL context could not be created';
+      }
     } catch (e) {
+      webglError = e.message || 'Unknown WebGL error';
       webglSupported = false;
     }
 
     if (!webglSupported) {
-      console.warn('WebGL is not supported in this browser. DarkVeil will not render.');
+      // Log detailed error information to help debug
+      console.warn('WebGL is not supported or disabled in this browser.', {
+        error: webglError,
+        userAgent: navigator.userAgent,
+        hardwareConcurrency: navigator.hardwareConcurrency,
+        // Check if WebGL is explicitly disabled via Chrome flags
+        chromeVersion: navigator.userAgent.match(/Chrome\/(\d+)/)?.[1]
+      });
+      console.warn('Possible reasons:');
+      console.warn('1. WebGL disabled in Chrome settings (chrome://settings/system or chrome://flags/#disable-webgl)');
+      console.warn('2. Outdated graphics drivers');
+      console.warn('3. Hardware acceleration disabled');
+      console.warn('4. WebGL blocked by extension or security policy');
+      console.warn('5. Chrome running in software rendering mode');
+      
+      // Apply fallback background gradient
+      if (parent) {
+        parent.style.background = 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%)';
+      }
       return;
     }
 
