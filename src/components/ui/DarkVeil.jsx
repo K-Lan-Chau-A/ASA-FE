@@ -125,42 +125,82 @@ export default function DarkVeil({
   const ref = useRef(null);
   useEffect(() => {
     const canvas = ref.current;
-    const parent = canvas.parentElement;
+    if (!canvas) return;
 
-    const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
-      canvas
-    });
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    // Check if WebGL is supported before trying to use it
+    const testCanvas = document.createElement('canvas');
+    let webglSupported = false;
+    try {
+      const testGl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+      webglSupported = !!testGl;
+    } catch (e) {
+      webglSupported = false;
+    }
+
+    if (!webglSupported) {
+      console.warn('WebGL is not supported in this browser. DarkVeil will not render.');
+      return;
+    }
+
+    let renderer;
+    try {
+      renderer = new Renderer({
+        dpr: Math.min(window.devicePixelRatio, 2),
+        canvas
+      });
+    } catch (e) {
+      console.warn('Failed to create WebGL renderer:', e);
+      return;
+    }
+
+    // Check if renderer has a valid GL context
+    if (!renderer || !renderer.gl) {
+      console.warn('WebGL context is not available. DarkVeil will not render.');
+      return;
+    }
 
     const gl = renderer.gl;
-    const geometry = new Triangle(gl);
+    let geometry, program, mesh;
 
-    const program = new Program(gl, {
-      vertex,
-      fragment,
-      uniforms: {
-        uTime: { value: 0 },
-        uResolution: { value: new Vec2() },
-        uHueShift: { value: hueShift },
-        uNoise: { value: noiseIntensity },
-        uScan: { value: scanlineIntensity },
-        uScanFreq: { value: scanlineFrequency },
-        uWarp: { value: warpAmount },
-        uTintColor: { value: new Vec3(tintColor[0], tintColor[1], tintColor[2]) },
-        uTintStrength: { value: tintStrength },
-        uTargetHue: { value: targetHue },
-        uHueReplaceStrength: { value: hueReplaceStrength },
-        uVignetteStrength: { value: vignetteStrength }
-      }
-    });
-
-    const mesh = new Mesh(gl, { geometry, program });
+    try {
+      geometry = new Triangle(gl);
+      program = new Program(gl, {
+        vertex,
+        fragment,
+        uniforms: {
+          uTime: { value: 0 },
+          uResolution: { value: new Vec2() },
+          uHueShift: { value: hueShift },
+          uNoise: { value: noiseIntensity },
+          uScan: { value: scanlineIntensity },
+          uScanFreq: { value: scanlineFrequency },
+          uWarp: { value: warpAmount },
+          uTintColor: { value: new Vec3(tintColor[0], tintColor[1], tintColor[2]) },
+          uTintStrength: { value: tintStrength },
+          uTargetHue: { value: targetHue },
+          uHueReplaceStrength: { value: hueReplaceStrength },
+          uVignetteStrength: { value: vignetteStrength }
+        }
+      });
+      mesh = new Mesh(gl, { geometry, program });
+    } catch (e) {
+      console.warn('Failed to initialize WebGL resources:', e);
+      return;
+    }
 
     const resize = () => {
-      const w = parent.clientWidth,
-        h = parent.clientHeight;
-      renderer.setSize(w * resolutionScale, h * resolutionScale);
-      program.uniforms.uResolution.value.set(w, h);
+      if (!renderer || !program || !parent) return;
+      try {
+        const w = parent.clientWidth,
+          h = parent.clientHeight;
+        renderer.setSize(w * resolutionScale, h * resolutionScale);
+        program.uniforms.uResolution.value.set(w, h);
+      } catch (e) {
+        console.warn('Error during resize:', e);
+      }
     };
 
     window.addEventListener('resize', resize);
@@ -170,25 +210,37 @@ export default function DarkVeil({
     let frame = 0;
 
     const loop = () => {
-      program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
-      program.uniforms.uHueShift.value = hueShift;
-      program.uniforms.uNoise.value = noiseIntensity;
-      program.uniforms.uScan.value = scanlineIntensity;
-      program.uniforms.uScanFreq.value = scanlineFrequency;
-      program.uniforms.uWarp.value = warpAmount;
-      program.uniforms.uTintColor.value.set(tintColor[0], tintColor[1], tintColor[2]);
-      program.uniforms.uTintStrength.value = tintStrength;
-      program.uniforms.uTargetHue.value = targetHue;
-      program.uniforms.uHueReplaceStrength.value = hueReplaceStrength;
-      program.uniforms.uVignetteStrength.value = vignetteStrength;
-      renderer.render({ scene: mesh });
-      frame = requestAnimationFrame(loop);
+      if (!renderer || !program || !mesh) {
+        cancelAnimationFrame(frame);
+        return;
+      }
+
+      try {
+        program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
+        program.uniforms.uHueShift.value = hueShift;
+        program.uniforms.uNoise.value = noiseIntensity;
+        program.uniforms.uScan.value = scanlineIntensity;
+        program.uniforms.uScanFreq.value = scanlineFrequency;
+        program.uniforms.uWarp.value = warpAmount;
+        program.uniforms.uTintColor.value.set(tintColor[0], tintColor[1], tintColor[2]);
+        program.uniforms.uTintStrength.value = tintStrength;
+        program.uniforms.uTargetHue.value = targetHue;
+        program.uniforms.uHueReplaceStrength.value = hueReplaceStrength;
+        program.uniforms.uVignetteStrength.value = vignetteStrength;
+        renderer.render({ scene: mesh });
+        frame = requestAnimationFrame(loop);
+      } catch (e) {
+        console.warn('Error during render loop:', e);
+        cancelAnimationFrame(frame);
+      }
     };
 
     loop();
 
     return () => {
-      cancelAnimationFrame(frame);
+      if (frame) {
+        cancelAnimationFrame(frame);
+      }
       window.removeEventListener('resize', resize);
     };
   }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, tintColor, tintStrength, targetHue, hueReplaceStrength, vignetteStrength]);
