@@ -44,10 +44,53 @@ export const seoConfig = {
       '@type': 'Product',
       name: 'ASA - Hệ sinh thái quản lý bán hàng',
       description: 'Hệ sinh thái hoàn chỉnh cho mọi nhu cầu quản lý bán hàng: từ Web, Desktop đến Mobile App',
+      image: 'https://asa.systems/logoASA.png',
       category: 'Business Software',
       offers: {
         '@type': 'Offer',
-        availability: 'https://schema.org/InStock'
+        availability: 'https://schema.org/InStock',
+        price: '0',
+        priceCurrency: 'VND',
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'VN',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 30,
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn'
+        },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: {
+            '@type': 'MonetaryAmount',
+            value: '0',
+            currency: 'VND'
+          },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            businessDays: {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+            },
+            cutoffTime: '23:59',
+            handlingTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 0,
+              maxValue: 0,
+              unitCode: 'DAY'
+            },
+            transitTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 0,
+              maxValue: 0,
+              unitCode: 'DAY'
+            }
+          },
+          shippingDestination: {
+            '@type': 'DefinedRegion',
+            addressCountry: 'VN'
+          }
+        }
       }
     }
   },
@@ -116,6 +159,7 @@ export const seoConfig = {
       '@type': 'Offer',
       name: 'Đăng ký dịch vụ ASA',
       description: 'Đăng ký dịch vụ quản lý bán hàng',
+      price: '300000',
       priceCurrency: 'VND'
     }
   }
