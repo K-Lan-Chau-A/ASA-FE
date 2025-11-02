@@ -54,10 +54,10 @@ const HeroSection = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/trial">
+                <Link to="/trial" className="w-full sm:flex-1">
                   <Button
                     size="lg"
-                    className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto"
+                    className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto w-full"
                   >
                     Dùng thử miễn phí
                     <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,7 +68,7 @@ const HeroSection = () => {
 
                 <Button
                   size="lg"
-                  className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto"
+                  className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto w-full sm:flex-1"
                 >
                   Xem demo
                   <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,10 +79,11 @@ const HeroSection = () => {
                 <a 
                   href="/app-release.apk" 
                   download="ASA-App.apk"
+                  className="w-full sm:flex-1"
                 >
                   <Button
                     size="lg"
-                    className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto"
+                    className="bg-white text-primary hover:text-[#FFFFFF] text-lg px-8 py-4 h-auto w-full"
                   >
                     <FaAndroid className="mr-2 h-5 w-5" />
                     Tải app Android
